@@ -50,7 +50,8 @@ Route::prefix('/blog')->name('blog.')->group(function () {
         if($post -> slug !== $slug){
             return to_route('blog.show', ['slug' => $post->slug, 'id' => $post->id]);
         }
-        return $post;
+        return $post; 
+        
         /*return [
             'slug' => $slug,
             'id' => $id,
