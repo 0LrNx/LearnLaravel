@@ -21,8 +21,6 @@ class BlogController extends Controller
     }
 
     public function show(string $slug, Post $post): RedirectResponse | View {
-        $post = Post::findOrFail($post);
-        // redirection automatique si le slug n'est pas correcte.
         if($post -> slug !== $slug){
             return to_route('blog.show', ['slug' => $post->slug, 'id' => $post->id]);
         }
