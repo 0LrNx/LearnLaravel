@@ -5,7 +5,7 @@
 
 @section('content')
     <h1>Mon Blog</h1>
-    
+
     @foreach($posts as $post)
         <h2>{{ $post->title }}</h2>
         <p>{{ $post->content }}</p>
@@ -15,4 +15,4 @@
     @endforeach
 
     {{ $posts->links() }}
-@endsection 
+@endsection
