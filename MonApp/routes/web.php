@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Post;
+use App\Http\Controllers\BlogController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
@@ -15,78 +15,19 @@ use Illuminate\Http\Request;
 |
 */
 
-/* UTILISATION D'UN PREFIX DANS LES ROUTES  */
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::prefix('/blog')->name('blog.')->group(function () {
-    Route::get('/', function (Request $request) {
+/* UTILISATION D'UN PREFIX DANS LES ROUTES  */
+Route::prefix('/blog')->name('blog.')->controller(BlogController::class)->group(function () {
+    Route::get('/', 'index')->name('index');
 
-        /* === ORM ELOQUENT === */
-
-        //$posts = Post::paginate(1, ['id', 'title']);
-        /*$post = Post::create([
-            'title' => 'Mon nouveau titre',
-            'slug' => 'nouveau-titre-test',
-            'content' => 'Nouveau contenu'
-        ]);
-
-        dd($post);
-        return $post;*/
-
-        return $post = Post::paginate(25);
-
-        /*
-        return [
-            "link" => \route('blog.show', ['slug' => 'article', 'id' => 13]),
-        ];*/
-    })->name('index');
-
-    Route::get('/{slug}-{id}', function (string $slug, string $id,Request $request) {
-        $post = Post::findOrFail($id);
-        // redirection automatique si le slug n'est pas correcte.
-        if($post -> slug !== $slug){
-            return to_route('blog.show', ['slug' => $post->slug, 'id' => $post->id]);
-        }
-        return $post; 
-        
-        /*return [
-            'slug' => $slug,
-            'id' => $id,
-            'name' => $request->input('name')
-        ];*/
-    })->where([
+    Route::get('/{slug}-{id}', 'show')->where([
         'slug' => '[a-z0-9\-]+',
         'id' => '[0-9]+'
     ])-> name('show');
 });
-    
-
-
-/*
-
-APPRENTISSAGE DES ROUTES
-
-Route::get('/blog', function (Request $request) {
-    return [
-        "link" => \route('blog.show', ['slug' => 'article', 'id' => 13]),
-    ];
-})-> name('blog.index');
-
-
-// http://localhost:8000/blog/test-de-mon-blog-1?name=John
-Route::get('/blog/{slug}/{id}', function (string $slug, string $id,Request $request) {
-    return [
-        'slug' => $slug,
-        'id' => $id,
-        'name' => $request->input('name')
-    ];
-})->where([
-    'slug' => '[a-z0-9\-]+',
-    'id' => '[0-9]+'
-])-> name('blog.show');
-*/
 
 
