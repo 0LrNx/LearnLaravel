@@ -12,7 +12,7 @@ class BlogFilterRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,15 +22,16 @@ class BlogFilterRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        
+        return [/*
             'title' => ['required', 'min:4'],
-            'slug' => ['required', 'regex:/^[a-z0-9\-]+$/']
+            'slug' => ['required', 'regex:/^[a-z0-9\-]+$/']*/
         ];
     }
 
     protected function prepareForValidation(){
-        $this->merge([
+        /*$this->merge([
             'slug' => $this->input('slug') ?: Str::slug($this->input('title'))
-        ]);
+        ]);*/
     }
 }
